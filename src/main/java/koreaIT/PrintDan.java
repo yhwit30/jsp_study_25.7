@@ -14,12 +14,28 @@ public class PrintDan extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("text/html;charset=UTF-8");
+		
+		String inputDan = request.getParameter("dan");
+		String inputLimit = request.getParameter("limit");
+		System.out.println(inputDan);
+		System.out.println(inputLimit);
+		
 
-		response.getWriter().append("== 8단 ==<br>");
+		if (inputDan == null) {
+			inputDan = "2";
+		}
+		if (inputLimit == null) {
+			inputLimit = "1";
+		}
+		
+		
+		int dan = Integer.parseInt(inputDan);
+		int limit = Integer.parseInt(inputLimit);
+		
+		response.getWriter().append("== " + dan + "단 ==<br>");
 
-		int dan = 8;
 
-		for (int i = 1; i < 10; i++) {
+		for (int i = 1; i <= limit; i++) {
 			response.getWriter().append(String.format("%d * %d = %d<br>", dan, i, (dan * i)));
 
 		}
