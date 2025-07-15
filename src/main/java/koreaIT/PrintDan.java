@@ -17,8 +17,11 @@ public class PrintDan extends HttpServlet {
 		
 		String inputDan = request.getParameter("dan");
 		String inputLimit = request.getParameter("limit");
+		String color = request.getParameter("color");
+		
 		System.out.println(inputDan);
 		System.out.println(inputLimit);
+		System.out.println(color);
 		
 
 		if (inputDan == null) {
@@ -32,11 +35,12 @@ public class PrintDan extends HttpServlet {
 		int dan = Integer.parseInt(inputDan);
 		int limit = Integer.parseInt(inputLimit);
 		
-		response.getWriter().append("== " + dan + "단 ==<br>");
-
+		
+		response.getWriter().append(String.format("<style>div {color : %s;} h1{color : blue;}</style>", color));
+		response.getWriter().append(String.format("<h1>== %d 단 ==</h1>", dan));
 
 		for (int i = 1; i <= limit; i++) {
-			response.getWriter().append(String.format("%d * %d = %d<br>", dan, i, (dan * i)));
+			response.getWriter().append(String.format("<div>%d * %d = %d</div>", dan, i, (dan * i)));
 
 		}
 
