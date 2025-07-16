@@ -1,4 +1,4 @@
-package koreaIT;
+package koreaIT.util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +13,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import koreaIT.exception.SQLErrorException;
 
 public class DBUtil {
 	HttpServletRequest req;

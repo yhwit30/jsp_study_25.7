@@ -1,4 +1,4 @@
-package koreaIT;
+package koreaIT.exception;
 
 public class SQLErrorException extends RuntimeException {
     private Exception origin;

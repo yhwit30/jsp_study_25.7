@@ -59,3 +59,19 @@ SELECT *
 FROM `member`;
 
 
+###############################################
+# 게시글 데이터 대량 생성
+INSERT INTO `article`
+SET `regDate` = NOW(),
+    `updateDate` = NOW(),
+    `title` = CONCAT('제목', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
+    `body` = CONCAT('내용', SUBSTRING(RAND() * 1000 FROM 1 FOR 2));
+
+
+# 회원 데이터 대량 생성
+INSERT INTO `member`
+SET `regDate` = NOW(),
+    `updateDate` = NOW(),
+    `loginId` = CONCAT('id', SUBSTRING(RAND() * 1000 FROM 1 FOR 3)),
+    `loginPw` = CONCAT('pw', SUBSTRING(RAND() * 1000 FROM 1 FOR 3)),
+    `name` = CONCAT('이름', SUBSTRING(RAND() * 1000 FROM 1 FOR 2));
