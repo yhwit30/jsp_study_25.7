@@ -29,14 +29,17 @@ public class ArticleDetailServlet extends HttpServlet {
 			System.out.println("연결 성공!");
 			
 			response.getWriter().append("연결성공");
-			  // select 테스트
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			// select 테스트
 
             DBUtil dbUtil = new DBUtil(request, response);
             
             SecSql sql = new SecSql();
             sql.append("SELECT *");
             sql.append("FROM `article`");
-            sql.append("where `id` = 3;");
+            sql.append("where `id` = ?;", id);
             
             Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
             
