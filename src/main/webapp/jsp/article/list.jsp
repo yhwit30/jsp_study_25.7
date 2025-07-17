@@ -28,7 +28,8 @@ table>thead>tr>th, table>tbody>tr>td {
 	<h2>게시글 목록</h2>
 
 
-	<table style="border-collapse: collapse; border-color: black;"
+	<table
+		style="border-collapse: collapse; border-color: black; margin: auto;"
 		border="1px";>
 		<thead>
 			<tr>
@@ -42,22 +43,23 @@ table>thead>tr>th, table>tbody>tr>td {
 		</thead>
 
 		<tbody>
+			<%
+			for (Map<String, Object> articleRow : articleRows) {
+			%>
 			<tr>
-				<td><%=articleRows.get(0).get("id")%>번</td>
-				<td><%=articleRows.get(0).get("regDate")%></td>
-				<td><%=articleRows.get(0).get("updateDate")%></td>
-				<td><%=articleRows.get(0).get("title")%></td>
-				<td><%=articleRows.get(0).get("body")%></td>
-				<td><a href="#">삭제</a></td>
+				<td><%=articleRow.get("id")%>번</td>
+				<td><%=articleRow.get("regDate")%></td>
+				<td><%=articleRow.get("updateDate")%></td>
+				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
+				<td><%=articleRow.get("body")%></td>
+				<td><a href="delete?id=<%=articleRow.get("id")%>">삭제</a></td>
 			</tr>
-			<tr>
-				<td><%=articleRows.get(1).get("id")%>번</td>
-				<td><%=articleRows.get(1).get("regDate")%></td>
-				<td><%=articleRows.get(1).get("updateDate")%></td>
-				<td><%=articleRows.get(1).get("title")%></td>
-				<td><%=articleRows.get(1).get("body")%></td>
-				<td><a href="#">삭제</a></td>
-			</tr>
+
+			<%
+			}
+			%>
+
+
 		</tbody>
 
 	</table>
