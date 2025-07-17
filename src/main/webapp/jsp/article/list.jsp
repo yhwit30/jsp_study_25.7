@@ -84,17 +84,16 @@ table>thead>tr>th, table>tbody>tr>td {
 }
 </style>
 
-	<!-- <div class="page">
+	<div class="page">
 
 		<%
 		for (int i = 1; i <= totalPage; i++) {
 		%>
 		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
-
 		<%
 		}
 		%>
 	</div>
- -->
+
 </body>
 </html>
