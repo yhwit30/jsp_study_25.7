@@ -15,7 +15,7 @@ import koreaIT.util.DBUtil;
 import koreaIT.util.SecSql;
 
 @WebServlet("/article/doWrite")
-public class ArticleDoWrite extends HttpServlet {
+public class ArticleDoWriteServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -33,8 +33,8 @@ public class ArticleDoWrite extends HttpServlet {
 
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
-			System.out.println(title);
-			System.out.println(body);
+			System.out.println("title : " + title);
+			System.out.println("body : " + body);
 
 			DBUtil dbUtil = new DBUtil(request, response);
 
@@ -65,5 +65,11 @@ public class ArticleDoWrite extends HttpServlet {
 		}
 		
 	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+	
 
 }
