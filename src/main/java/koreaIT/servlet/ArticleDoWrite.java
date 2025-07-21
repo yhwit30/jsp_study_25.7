@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,11 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import koreaIT.util.DBUtil;
 import koreaIT.util.SecSql;
 
-@WebServlet("/article/delete")
-public class ArticleDeleteServlet extends HttpServlet {
+@WebServlet("/aricle/doWrite")
+public class ArticleDoWrite extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 
 		Connection conn = null;
@@ -33,17 +31,21 @@ public class ArticleDeleteServlet extends HttpServlet {
 
 			response.getWriter().append("연결성공");
 
-			int id = Integer.parseInt(request.getParameter("id"));
+			String title = request.getParameter("title");
+			String body = request.getParameter("body");
+			System.out.println(title);
+			System.out.println(body);
 
 			DBUtil dbUtil = new DBUtil(request, response);
 
 			SecSql sql = new SecSql();
-			sql.append("delete from `article`");
-			sql.append("where `id` = ?;", id);
+			sql.append("insert into `article`");
+			sql.append("SET `title` = ?,", title);
+			sql.append("`body` = ?;", body);
 
-			int affectedRow = dbUtil.delete(conn, sql);
+			int id = dbUtil.insert(conn, sql);
 
-            response.getWriter().append(String.format("<script>alert('%d번 글이 삭제됨');location.replace('list'); </script>", id));
+            response.getWriter().append(String.format("<script>alert('%d번 글이 등록됨');location.replace('list'); </script>", id));
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패" + e);
@@ -57,8 +59,9 @@ public class ArticleDeleteServlet extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
 
+		}
+		
 	}
 
 }
