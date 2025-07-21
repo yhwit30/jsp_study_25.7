@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import koreaIT.util.DBUtil;
 import koreaIT.util.SecSql;
 
-@WebServlet("/aricle/doWrite")
+@WebServlet("/article/doWrite")
 public class ArticleDoWrite extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,7 +40,9 @@ public class ArticleDoWrite extends HttpServlet {
 
 			SecSql sql = new SecSql();
 			sql.append("insert into `article`");
-			sql.append("SET `title` = ?,", title);
+			sql.append("SET `regDate` = NOW(),");
+			sql.append("`updateDate` = NOW(),");
+			sql.append("`title` = ?,", title);
 			sql.append("`body` = ?;", body);
 
 			int id = dbUtil.insert(conn, sql);
