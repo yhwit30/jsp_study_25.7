@@ -27,7 +27,6 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://127.0.0.1:3307/AM_jsp_2025_07?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul";
 			conn = DriverManager.getConnection(url, "root", "");
-			System.out.println("연결 성공!");
 
 			response.getWriter().append("연결성공");
 
@@ -39,13 +38,14 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			DBUtil dbUtil = new DBUtil(request, response);
 
 			SecSql sql = new SecSql();
-			sql.append("insert into `article`");
+			sql.append("INSERT INTO `article`");
 			sql.append("SET `regDate` = NOW(),");
 			sql.append("`updateDate` = NOW(),");
 			sql.append("`title` = ?,", title);
-			sql.append("`body` = ?;", body);
+			sql.append("`body` = ?", body);
 
 			int id = dbUtil.insert(conn, sql);
+			System.out.println("id : " + id);
 
             response.getWriter().append(String.format("<script>alert('%d번 글이 등록됨');location.replace('list'); </script>", id));
 
@@ -67,7 +67,6 @@ public class ArticleDoWriteServlet extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	

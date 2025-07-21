@@ -60,6 +60,7 @@ public class ArticleListServlet extends HttpServlet {
             sql = new SecSql();
             sql.append("SELECT *");
             sql.append("FROM `article`");
+            sql.append("ORDER BY `id` DESC");
             sql.append("limit ?, ?", limitFrom, itemsInAPage);
             
             List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);

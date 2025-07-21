@@ -28,8 +28,11 @@ table>thead>tr>th, table>tbody>tr>td {
 <body>
 
 	<a href="../home/main">메인으로 이동</a>
+	<div>
+	<a href="write">글쓰기</a></div>
 
 	<h2>게시글 목록</h2>
+	
 
 	<div>
 		총 게시글 수 :
