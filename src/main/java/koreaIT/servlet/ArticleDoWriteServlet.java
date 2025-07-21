@@ -20,6 +20,7 @@ public class ArticleDoWriteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
 
 		Connection conn = null;
 
@@ -48,6 +49,7 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			System.out.println("id : " + id);
 
             response.getWriter().append(String.format("<script>alert('%d번 글이 등록됨');location.replace('list'); </script>", id));
+            System.out.println("스크립트 이후 출력확인");
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패" + e);
