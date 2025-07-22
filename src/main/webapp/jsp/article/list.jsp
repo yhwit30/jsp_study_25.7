@@ -50,6 +50,7 @@ table>thead>tr>th, table>tbody>tr>td {
 				<th>제목</th>
 				<th>내용</th>
 				<th>삭제</th>
+				<th>수정</th>
 			</tr>
 		</thead>
 
@@ -64,6 +65,7 @@ table>thead>tr>th, table>tbody>tr>td {
 				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
 				<td><%=articleRow.get("body")%></td>
 				<td><a href="delete?id=<%=articleRow.get("id")%>">삭제</a></td>
+				<td><a href="modify?id=<%=articleRow.get("id")%>">수정</a></td>
 			</tr>
 
 			<%

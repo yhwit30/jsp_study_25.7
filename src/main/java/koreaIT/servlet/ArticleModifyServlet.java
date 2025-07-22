@@ -43,6 +43,11 @@ public class ArticleModifyServlet extends HttpServlet {
 
 			Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
 			
+			if (articleRow.isEmpty()) {
+				response.getWriter().append(String.format("<script>alert('%d번 글은 존재하지 않습니다.');location.replace('list'); </script>", id));
+				return;
+			}
+			
 			System.out.println("modify articleRow : " + articleRow.toString());
 			
 			request.setAttribute("articleRow", articleRow);
