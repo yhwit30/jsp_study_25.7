@@ -34,9 +34,8 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			response.getWriter().append("연결성공");
 
 			HttpSession session = request.getSession();
-			Map<String, Object> loginedMember = (Map<String, Object>) session.getAttribute("loginedMember");
 						
-			int loginedMemberId = (int) loginedMember.get("id");
+			int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 			
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
