@@ -10,10 +10,24 @@
 <body>
 
 <a href="../home/main">메인으로 이동</a>
+<div><a href="join">회원가입</a></div>
 
 <script type = "text/javascript">
 function LoginForm_submit(form){
 
+	let loginId = form.loginId.value.trim();
+	let loginPw = form.loginPw.value.trim();
+	
+	if(loginId.length == 0){
+		alert('아이디 작성하세요.');
+		form.loginId.focus();
+		return;
+	}
+	if(loginPw.length == 0){
+		alert('비밀번호 작성하세요.');
+		form.loginPw.focus();
+		return;
+	}
 	
 	form.submit();
 }

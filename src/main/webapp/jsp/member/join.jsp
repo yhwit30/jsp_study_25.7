@@ -10,6 +10,7 @@
 <body>
 
 <a href="../home/main">메인으로 이동</a>
+<div><a href="login">로그인하기</a></div>
 
 <script type = "text/javascript">
 function JoinForm_submit(form){

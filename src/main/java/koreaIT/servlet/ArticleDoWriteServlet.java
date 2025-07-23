@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import koreaIT.util.DBUtil;
 import koreaIT.util.SecSql;
@@ -31,6 +33,11 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
 			response.getWriter().append("연결성공");
 
+			HttpSession session = request.getSession();
+			Map<String, Object> loginedMember = (Map<String, Object>) session.getAttribute("loginedMember");
+						
+			int loginedMemberId = (int) loginedMember.get("id");
+			
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
 			System.out.println("title : " + title);
@@ -42,6 +49,7 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			sql.append("INSERT INTO `article`");
 			sql.append("SET `regDate` = NOW(),");
 			sql.append("`updateDate` = NOW(),");
+			sql.append("`memberId` = ?,", loginedMemberId);
 			sql.append("`title` = ?,", title);
 			sql.append("`body` = ?", body);
 
@@ -49,7 +57,6 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			System.out.println("id : " + id);
 
             response.getWriter().append(String.format("<script>alert('%d번 글이 등록됨');location.replace('list'); </script>", id));
-            System.out.println("스크립트 이후 출력확인");
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패" + e);
