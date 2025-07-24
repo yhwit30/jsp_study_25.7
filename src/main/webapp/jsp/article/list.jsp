@@ -6,6 +6,7 @@
 
 <%
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
+Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("loginedMember");
 
 int cPage = (int) request.getAttribute("page");
 int totalCnt = (int) request.getAttribute("totalCnt");
@@ -27,6 +28,9 @@ table>thead>tr>th, table>tbody>tr>td {
 </style>
 
 <body>
+
+	<%@include file="../part/top_bar.jspf"%>
+
 
 	<a href="../home/main">메인으로 이동</a>
 	<%
@@ -73,11 +77,13 @@ table>thead>tr>th, table>tbody>tr>td {
 				<td><%=articleRow.get("updateDate")%></td>
 				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
 				<td><%=articleRow.get("body")%></td>
-				<td><%=articleRow.get("name") %></td>
+				<td><%=articleRow.get("name")%></td>
 				<!-- 이후 상세보기로 이동 todo -->
-				<td><a onclick="if(confirm('정말 삭제하시겠습니까?') == false){return false;}" href="doDelete?id=<%=articleRow.get("id")%>">삭제</a></td>
+				<td><a
+					onclick="if(confirm('정말 삭제하시겠습니까?') == false){return false;}"
+					href="doDelete?id=<%=articleRow.get("id")%>">삭제</a></td>
 				<td><a href="modify?id=<%=articleRow.get("id")%>">수정</a></td>
-				
+
 			</tr>
 
 			<%

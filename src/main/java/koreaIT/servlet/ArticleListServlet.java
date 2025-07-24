@@ -72,6 +72,7 @@ public class ArticleListServlet extends HttpServlet {
 
 			// 로그인정보
 			HttpSession session = request.getSession();
+			Map<String, Object> loginedMember = (Map<String, Object>) session.getAttribute("loginedMember");
 			int loginedMemberId = -1;
 			if (session.getAttribute("loginedMemberId") != null) {
 				loginedMemberId = (int) session.getAttribute("loginedMemberId");
@@ -82,9 +83,9 @@ public class ArticleListServlet extends HttpServlet {
 			request.setAttribute("totalCnt", totalCnt);
 			request.setAttribute("totalPage", totalPage);
 			request.setAttribute("loginedMemberId", loginedMemberId);
+			request.setAttribute("loginedMember", loginedMember);
 
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
-
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패" + e);
