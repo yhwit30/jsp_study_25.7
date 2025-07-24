@@ -45,26 +45,44 @@ public class DispatcherServlet extends HttpServlet {
 
 			String requestUri = request.getRequestURI();
 
-			response.getWriter().append("Served at: ").append(requestUri);
-
 			String[] reqUriBits = requestUri.split("/");
+
+			if (reqUriBits.length < 5) {
+				response.getWriter().append(
+						String.format("<script>alert('올바른 요청이 아닙니다.');location.replace('../home/main'); </script>"));
+			}
 			String controllerName = reqUriBits[3];
 			String actionMethodName = reqUriBits[4];
 
 			System.out.println("controllerName : " + controllerName);
 			System.out.println("actionMethodName : " + actionMethodName);
 
-//		System.out.println(reqUriBits[0]); // 공백
-//		System.out.println(reqUriBits[1]); // servlet
-//		System.out.println(reqUriBits[2]); // s
-//		System.out.println(reqUriBits[3]); // article
-//		System.out.println(reqUriBits[4]); // list
-
 			if (controllerName.equals("article")) {
 				ArticleController articleController = new ArticleController(request, response, conn);
 
-				if (actionMethodName.equals("list")) {
+				switch (actionMethodName) {
+				case "list":
 					articleController.showList();
+					break;
+				case "detail":
+					articleController.showDetail();
+					break;
+				case "write":
+					articleController.showWrite();
+					break;
+				case "doWrite":
+					articleController.doWrite();
+					break;
+				case "modify":
+					articleController.showModify();
+					break;
+				case "doModify":
+					articleController.doModify();
+					break;
+				case "doDelete":
+					articleController.doDelete();
+					break;
+
 				}
 
 			}
