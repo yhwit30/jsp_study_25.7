@@ -12,19 +12,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import koreaIT.util.DBUtil;
 import koreaIT.util.SecSql;
 
-@WebServlet("/article/delete")
-public class ArticleDeleteServlet extends HttpServlet {
+@WebServlet("/article/doDelete")
+public class ArticleDoDeleteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 
+		// 로그인 체크
+		HttpSession session = request.getSession();
+		if (session.getAttribute("loginedMemberId") == null) {
+			response.getWriter().append(String.format("<script>alert('로그인 하고 와');location.replace('list'); </script>"));
+			return;
+		}
+		
+		
+		
 		Connection conn = null;
-
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://127.0.0.1:3307/AM_jsp_2025_07?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul";
@@ -32,14 +41,28 @@ public class ArticleDeleteServlet extends HttpServlet {
 			System.out.println("연결 성공!");
 
 			response.getWriter().append("연결성공");
-
-			int id = Integer.parseInt(request.getParameter("id"));
-
 			DBUtil dbUtil = new DBUtil(request, response);
 
+			int id = Integer.parseInt(request.getParameter("id"));
+			
 			SecSql sql = new SecSql();
-			sql.append("delete from `article`");
-			sql.append("where `id` = ?;", id);
+			sql.append("SELECT *");
+			sql.append("FROM `article`");
+			sql.append("WHERE `id` = ?", id);
+			
+			Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
+			int articleMemberId = (int) articleRow.get("memberId");
+			int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+			
+			if(articleMemberId != loginedMemberId) {
+				response.getWriter().append(String.format("<script>alert('%d번 글에 대한 권한이 없습니다.');location.replace('list'); </script>", id));
+				return;
+			};
+
+
+			sql = new SecSql();
+			sql.append("DELETE FROM `article`");
+			sql.append("WHERE `id` = ?;", id);
 
 			int affectedRow = dbUtil.delete(conn, sql);
 
