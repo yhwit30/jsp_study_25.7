@@ -22,24 +22,8 @@ public class DispatcherServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String requestUri = request.getRequestURI();
-
-		response.getWriter().append("Served at: ").append(requestUri);
-
-		String[] reqUriBits = requestUri.split("/");
-		String controllerName = reqUriBits[3];
-		String actionMethodName = reqUriBits[4];
-		
-		System.out.println("controllerName : " + controllerName);
-		System.out.println("actionMethodName : " + actionMethodName);
-
-//		System.out.println(reqUriBits[0]); // 공백
-//		System.out.println(reqUriBits[1]); // servlet
-//		System.out.println(reqUriBits[2]); // s
-//		System.out.println(reqUriBits[3]); // article
-//		System.out.println(reqUriBits[4]); // list
-
 		// DB 연결
+		response.setContentType("text/html;charset=UTF-8");
 		Connection conn = null;
 		try {
 
@@ -59,6 +43,32 @@ public class DispatcherServlet extends HttpServlet {
 				loginedMemberId = (int) session.getAttribute("loginedMemberId");
 			}
 
+			String requestUri = request.getRequestURI();
+
+			response.getWriter().append("Served at: ").append(requestUri);
+
+			String[] reqUriBits = requestUri.split("/");
+			String controllerName = reqUriBits[3];
+			String actionMethodName = reqUriBits[4];
+
+			System.out.println("controllerName : " + controllerName);
+			System.out.println("actionMethodName : " + actionMethodName);
+
+//		System.out.println(reqUriBits[0]); // 공백
+//		System.out.println(reqUriBits[1]); // servlet
+//		System.out.println(reqUriBits[2]); // s
+//		System.out.println(reqUriBits[3]); // article
+//		System.out.println(reqUriBits[4]); // list
+
+			if (controllerName.equals("article")) {
+				ArticleController articleController = new ArticleController(request, response, conn);
+
+				if (actionMethodName.equals("list")) {
+					articleController.showList();
+				}
+
+			}
+
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패" + e);
 		} catch (SQLException e) {
@@ -71,15 +81,6 @@ public class DispatcherServlet extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
-
-		if (controllerName.equals("article")) {
-			ArticleController articleController = new ArticleController(request, response, conn);
-
-			if (actionMethodName.equals("list")) {
-				articleController.showList();
-			}
-
 		}
 
 	}
