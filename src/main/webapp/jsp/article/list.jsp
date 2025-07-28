@@ -3,9 +3,10 @@
 
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
+<%@page import="dto.Article"%>
 
 <%
-List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
+List<Article> articleRows = (List<Article>) request.getAttribute("articleRows");
 Map<String, Object> loginedMember = (Map<String, Object>) request.getAttribute("loginedMember");
 
 int cPage = (int) request.getAttribute("page");
@@ -69,20 +70,20 @@ table>thead>tr>th, table>tbody>tr>td {
 
 		<tbody>
 			<%
-			for (Map<String, Object> articleRow : articleRows) {
+			for (Article articleRow : articleRows) {
 			%>
 			<tr>
-				<td><%=articleRow.get("id")%>번</td>
-				<td><%=articleRow.get("regDate")%></td>
-				<td><%=articleRow.get("updateDate")%></td>
-				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
-				<td><%=articleRow.get("body")%></td>
-				<td><%=articleRow.get("name")%></td>
+				<td><%=articleRow.getId()%>번</td>
+				<td><%=articleRow.getRegDate()%></td>
+				<td><%=articleRow.getUpdateDate()%></td>
+				<td><a href="detail?id=<%=articleRow.getId()%>"><%=articleRow.getTitle()%></a></td>
+				<td><%=articleRow.getBody()%></td>
+				<td><%=articleRow.getName()%></td>
 				<!-- 이후 상세보기로 이동 todo -->
 				<td><a
 					onclick="if(confirm('정말 삭제하시겠습니까?') == false){return false;}"
-					href="doDelete?id=<%=articleRow.get("id")%>">삭제</a></td>
-				<td><a href="modify?id=<%=articleRow.get("id")%>">수정</a></td>
+					href="doDelete?id=<%=articleRow.getId()%>">삭제</a></td>
+				<td><a href="modify?id=<%=articleRow.getId()%>">수정</a></td>
 
 			</tr>
 

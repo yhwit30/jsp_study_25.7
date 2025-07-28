@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dto.Article;
 import koreaIT.util.DBUtil;
 import koreaIT.util.SecSql;
+import service.ArticleService;
 
 public class ArticleController {
 	private HttpServletRequest request;
@@ -55,7 +57,7 @@ public class ArticleController {
 		int totalCnt = articleService.getTotalCnt();
 		int totalPage = (int) Math.ceil(totalCnt / (double) itemsInAPage);
 
-		List<Map<String, Object>> articleRows = articleService.getArticleRows(limitFrom, itemsInAPage);
+		List<Article> articleRows = articleService.getArticleRows(limitFrom, itemsInAPage);
 
 		System.out.println("totalCnt : " + totalCnt);
 		System.out.println("totalPage : " + totalPage);
