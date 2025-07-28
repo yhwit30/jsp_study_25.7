@@ -17,11 +17,15 @@ public class ArticleController {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Connection conn;
+	
+	private ArticleService articleService;
 
 	public ArticleController(HttpServletRequest request, HttpServletResponse response, Connection conn) {
 		this.request = request;
 		this.response = response;
 		this.conn = conn;
+		
+		this.articleService = new ArticleService(conn);
 	}
 
 	private boolean isLogined() {
@@ -48,24 +52,13 @@ public class ArticleController {
 		System.out.println("itemsInAPage : " + itemsInAPage);
 		System.out.println("limitFrom : " + limitFrom);
 
-		DBUtil dbUtil = new DBUtil(request, response);
-
-		SecSql sql = new SecSql();
-		sql.append("SELECT count(*)");
-		sql.append("FROM `article`;");
-
-		int totalCnt = DBUtil.selectRowIntValue(conn, sql);
+//		int totalCnt = DBUtil.selectRowIntValue(conn, sql);
+		int totalCnt = articleService.getTotalCnt();
 		int totalPage = (int) Math.ceil(totalCnt / (double) itemsInAPage);
 
-		sql = new SecSql();
-		sql.append("SELECT *");
-		sql.append("FROM `article` a");
-		sql.append("INNER JOIN `member` m");
-		sql.append("ON a.memberId = m.id");
-		sql.append("ORDER BY a.`id` DESC");
-		sql.append("LIMIT ?, ?", limitFrom, itemsInAPage);
-
-		List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
+		
+//		List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
+		List<Map<String, Object>> articleRows = articleService.getArticleRows(limitFrom, itemsInAPage);
 
 		System.out.println("totalCnt : " + totalCnt);
 		System.out.println("totalPage : " + totalPage);
@@ -109,13 +102,15 @@ public class ArticleController {
 	}
 
 	public void showWrite() throws ServletException, IOException {
-		
+
 		// 로그인 체크
 		if (!isLogined()) {
+			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().append("<script>alert('로그인 하고 와');location.replace('../home/main'); </script>");
 			return;
 		}
 
+		
 		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
 
 	}
