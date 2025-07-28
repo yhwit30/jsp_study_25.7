@@ -109,11 +109,12 @@ public class ArticleController {
 	}
 
 	public void showWrite() throws ServletException, IOException {
+		
 		// 로그인 체크
-//		if (!isLogined()) {
-//			response.getWriter().append(String.format("<script>alert('로그인 하고 와');location.replace('list'); </script>"));
-//			return;
-//		}
+		if (!isLogined()) {
+			response.getWriter().append("<script>alert('로그인 하고 와');location.replace('../home/main'); </script>");
+			return;
+		}
 
 		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
 
@@ -122,11 +123,10 @@ public class ArticleController {
 	public void doWrite() throws ServletException, IOException {
 
 		// 로그인 체크
-//		if (!isLogined()) {
-//			response.getWriter()
-//					.append(String.format("<script>alert('로그인 하고 와');location.replace('../member/login'); </script>"));
-//			return;
-//		}
+		if (!isLogined()) {
+			response.getWriter().append("<script>alert('로그인 하고 와');location.replace('../home/main'); </script>");
+			return;
+		}
 
 		String title = request.getParameter("title");
 		String body = request.getParameter("body");
@@ -152,6 +152,13 @@ public class ArticleController {
 	}
 
 	public void showModify() throws ServletException, IOException {
+
+		// 로그인 체크
+		if (!isLogined()) {
+			response.getWriter().append("<script>alert('로그인 하고 와');location.replace('../home/main'); </script>");
+			return;
+		}
+
 		int id = Integer.parseInt(request.getParameter("id"));
 		System.out.println("modify id : " + id);
 
@@ -179,6 +186,13 @@ public class ArticleController {
 	}
 
 	public void doModify() throws ServletException, IOException {
+
+		// 로그인 체크
+		if (!isLogined()) {
+			response.getWriter().append("<script>alert('로그인 하고 와');location.replace('../home/main'); </script>");
+			return;
+		}
+
 		int id = Integer.parseInt(request.getParameter("id"));
 		String title = request.getParameter("title");
 		String body = request.getParameter("body");
@@ -205,7 +219,7 @@ public class ArticleController {
 
 		// 로그인 체크
 		if (!isLogined()) {
-			response.getWriter().append(String.format("<script>alert('로그인 하고 와');location.replace('list'); </script>"));
+			response.getWriter().append("<script>alert('로그인 하고 와');location.replace('../home/main'); </script>");
 			return;
 		}
 

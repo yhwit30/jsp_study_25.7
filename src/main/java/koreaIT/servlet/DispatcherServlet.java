@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.ArticleController;
+import controller.HomeController;
 import koreaIT.util.DBUtil;
 
 @WebServlet("/s/*")
@@ -56,6 +57,11 @@ public class DispatcherServlet extends HttpServlet {
 
 			System.out.println("controllerName : " + controllerName);
 			System.out.println("actionMethodName : " + actionMethodName);
+			
+			if (controllerName.equals("home")) {
+				HomeController homeController = new HomeController(request, response);
+				homeController.showMain();
+			}
 
 			if (controllerName.equals("article")) {
 				ArticleController articleController = new ArticleController(request, response, conn);
