@@ -17,14 +17,14 @@ public class ArticleController {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Connection conn;
-	
+
 	private ArticleService articleService;
 
 	public ArticleController(HttpServletRequest request, HttpServletResponse response, Connection conn) {
 		this.request = request;
 		this.response = response;
 		this.conn = conn;
-		
+
 		this.articleService = new ArticleService(conn);
 	}
 
@@ -52,12 +52,9 @@ public class ArticleController {
 		System.out.println("itemsInAPage : " + itemsInAPage);
 		System.out.println("limitFrom : " + limitFrom);
 
-//		int totalCnt = DBUtil.selectRowIntValue(conn, sql);
 		int totalCnt = articleService.getTotalCnt();
 		int totalPage = (int) Math.ceil(totalCnt / (double) itemsInAPage);
 
-		
-//		List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
 		List<Map<String, Object>> articleRows = articleService.getArticleRows(limitFrom, itemsInAPage);
 
 		System.out.println("totalCnt : " + totalCnt);
@@ -106,11 +103,10 @@ public class ArticleController {
 		// 로그인 체크
 		if (!isLogined()) {
 			response.setContentType("text/html;charset=UTF-8");
-			response.getWriter().append("<script>alert('로그인 하고 와');location.replace('../home/main'); </script>");
+			response.getWriter().append("<script>alert('로그인 하고 와'); </script>");
 			return;
 		}
 
-		
 		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
 
 	}

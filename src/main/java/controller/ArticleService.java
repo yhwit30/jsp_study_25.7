@@ -10,29 +10,24 @@ import koreaIT.util.SecSql;
 public class ArticleService {
 	
 	private Connection conn;
+	
+	private ArticleDao articleDao;
 
 	public ArticleService(Connection conn) {
 		this.conn = conn;
+		this.articleDao = new ArticleDao(conn);
 	}
 
 	public int getTotalCnt() {
-		SecSql sql = new SecSql();
-		sql.append("SELECT count(*)");
-		sql.append("FROM `article`;");
 		
-		return DBUtil.selectRowIntValue(conn, sql);
+//		return DBUtil.selectRowIntValue(conn, sql);
+		return articleDao.getTotalCnt();
 	}
 
 	public List<Map<String, Object>> getArticleRows(int limitFrom, int itemsInAPage) {
-		SecSql sql = new SecSql();
-		sql.append("SELECT *");
-		sql.append("FROM `article` a");
-		sql.append("INNER JOIN `member` m");
-		sql.append("ON a.memberId = m.id");
-		sql.append("ORDER BY a.`id` DESC");
-		sql.append("LIMIT ?, ?", limitFrom, itemsInAPage);
 		
-		return DBUtil.selectRows(conn, sql);
+//		return DBUtil.selectRows(conn, sql);
+		return articleDao.getSelectRows(limitFrom, itemsInAPage);
 	}
 
 }
